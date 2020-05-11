@@ -1,0 +1,5 @@
+User(UserID, Username, Password, FirstName, LastName)
+Workout(WorkoutID, UserID, Date, Start Time, End TIme)
+ -Foreign Key UserID references User
+Exercise(ExerciseID, WorkoutID, Name, Type(endurance|strength), Reps, Time, Weight)
+-Foreign Key WorkoutID references Workout
