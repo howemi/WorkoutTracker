@@ -2,4 +2,9 @@ User(UserID, Username, Password, FirstName, LastName)
 Workout(WorkoutID, UserID, Date, Start Time, End TIme)
  -Foreign Key UserID references User
 Exercise(ExerciseID, WorkoutID, Name, Type(endurance|strength), Reps, Time, Weight)
--Foreign Key WorkoutID references Workout
+ -Foreign Key WorkoutID references Workout
+ 
+ User stores the basic information for each user of the application, and each has a unique ID
+ Workout stores the time & date info for a users workout (using the UserID to map to the user) and is given a unique ID
+ Exercise stores the type of exercise, and the details of it.  An excercise is part of a workout (referenced with the WorkoutID) and is
+ given a unique ID
