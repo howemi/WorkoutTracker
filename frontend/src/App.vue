@@ -19,6 +19,14 @@
           Workouts
         </v-btn>
       </router-link>
+      <v-spacer></v-spacer>
+      <router-link to="/login">
+        <v-btn
+                text
+        >
+          Sign in
+        </v-btn>
+      </router-link>
     </v-app-bar>
 
     <v-content>
