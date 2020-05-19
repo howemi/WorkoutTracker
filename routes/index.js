@@ -5,7 +5,7 @@ var request = require('request');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.sendFile('index.html', { root: 'public' });
+  res.sendFile('index.html', { root: 'public/dist' });
 });
 
 module.exports = router;
