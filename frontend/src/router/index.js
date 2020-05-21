@@ -22,8 +22,8 @@ Vue.use(VueRouter)
   },
   {
     path: '/workouts',
-    name: 'workoutPage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/WorkoutPage.vue'),
+    name: 'workoutDashboard',
+    component: () => import(/* webpackChunkName: "about" */ '../views/WorkoutDashboard.vue'),
     children: [
       {
         path: ':id',

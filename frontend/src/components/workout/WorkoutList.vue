@@ -1,5 +1,10 @@
 <template>
-  <v-navigation-drawer permanent style="width: 100%; overflow: hidden">
+  <v-navigation-drawer 
+    permanent 
+    style="width: 100%; overflow: hidden"
+    src="/assets/blur-leaves.jpg"
+    dark
+  >
     <v-toolbar color="blue" dark>
       <v-toolbar-title >Your Workouts</v-toolbar-title>
     </v-toolbar>

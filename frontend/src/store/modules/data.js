@@ -46,7 +46,42 @@ export default {
           id: '1',
           date: 'today',
           exercises: [],
-        }
+        },
+        {
+          id: '2',
+          date: 'today',
+          exercises: [],
+        },
+        {
+          id: '3',
+          date: 'today',
+          exercises: [],
+        },
+        {
+          id: '4',
+          date: 'today',
+          exercises: [],
+        },
+        {
+          id: '5',
+          date: 'today',
+          exercises: [],
+        },
+        {
+          id: '6',
+          date: 'today',
+          exercises: [],
+        },
+        {
+          id: '7',
+          date: 'today',
+          exercises: [],
+        },
+        {
+          id: '8',
+          date: 'today',
+          exercises: [],
+        },
       ]
       commit("SET_WORKOUTS", data);
     },

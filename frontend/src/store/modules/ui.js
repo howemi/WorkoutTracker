@@ -1,5 +1,6 @@
 export default {
   state: {
+    drawer: false,
     newWorkoutForm: false,
     notification: {
       display: false,
@@ -9,6 +10,9 @@ export default {
     },
   },
   getters: {
+    DRAWER: state => {
+      return state.drawer
+    },
     NEW_WORKOUT_FORM: state => {
       return state.newWorkoutForm
     },
@@ -17,6 +21,9 @@ export default {
     },
   },
   mutations: {
+    SET_DRAWER: (state, payload) => {
+      state.drawer = payload
+    },
     SET_NEW_WORKOUT_FORM: (state, payload) => {
       state.newWorkoutForm = payload;
     },
