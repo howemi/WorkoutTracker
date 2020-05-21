@@ -1,6 +1,6 @@
 <template>
   <div>
-    HOME
+    Welcome to Olympiate
   </div>
 </template>
 

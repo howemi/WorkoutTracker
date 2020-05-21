@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/test', async (req, res) => {
-  res.send('test');
+  res.send('test passed');
 });
 
 module.exports = router;

@@ -1,12 +1,12 @@
 <template>
   <div>
-    WORKOUTS
+    add create workout details here
   </div>
 </template>
 
 <script>
 
   export default {
-    name: 'workouts'
+    name: 'newWorkoutForm',
   }
 </script>
