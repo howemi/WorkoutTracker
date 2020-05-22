@@ -39,7 +39,7 @@ router.post('/login', async ({ body }, res) => {
 
   User.findAll()
   .then(users => {
-    console.log(...users)
+    console.log(...usersw)
   })
 });
 
