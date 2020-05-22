@@ -4,9 +4,9 @@ export default {
     newWorkoutForm: false,
     notification: {
       display: false,
-      text: "Notification placeholder text",
+      text: 'Notification placeholder text',
       timeout: 3000,
-      class: "success"
+      class: 'success'
     },
   },
   getters: {
@@ -17,7 +17,7 @@ export default {
       return state.newWorkoutForm
     },
     NOTIFICATION: state => {
-      return state.notification;
+      return state.notification
     },
   },
   mutations: {
@@ -28,9 +28,9 @@ export default {
       state.newWorkoutForm = payload;
     },
     SET_NOTIFICATION: (state, { display, text, alertClass }) => {
-      state.notification.display = display;
-      state.notification.text = text;
-      state.notification.class = alertClass;
+      state.notification.display = display
+      state.notification.text = text
+      state.notification.class = alertClass
     },
   },
   actions: {},

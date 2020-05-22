@@ -11,14 +11,30 @@
               <v-alert
                 :value="userExists"
                 color="error"
-                icon="warning"
+                icon="mdi-alert"
               >This user already exists, try a different set of data.</v-alert>
 
               <v-text-field
                 prepend-icon="mdi-account"
                 name="login"
                 v-model="username"
-                label="Login"
+                label="Username"
+                :rules="[rules.required]"
+              ></v-text-field>
+
+              <v-text-field
+                prepend-icon="mdi-moon-last-quarter"
+                name="login"
+                v-model="firstName"
+                label="First Name"
+                :rules="[rules.required]"
+              ></v-text-field>
+
+              <v-text-field
+                prepend-icon="mdi-moon-first-quarter"
+                name="login"
+                v-model="lastName"
+                label="Last Name"
                 :rules="[rules.required]"
               ></v-text-field>
 
@@ -71,6 +87,8 @@
       data: () => ({
         userExists: false,
         username: '', 
+        firstName: '',
+        lastName: '',
         email: '',
         password: "",
         confirm_password: "",
@@ -87,10 +105,13 @@
           if (this.valid()) {
             this.$store.dispatch('REGISTER', {
               username: this.username,
+              firstName: this.firstName,
+              lastName: this.lastName,
               email: this.email,
               password: this.password
             })
             .then(({ status }) => {
+              status;
               this.$store.commit("SET_NOTIFICATION", {
                 display: true,
                 text: 'Your account has been successfully created! you can now login.',
@@ -99,6 +120,7 @@
               this.$router.push('/login')
             })
             .catch (error => {
+              error;
               this.userExists = true;
             })
           }

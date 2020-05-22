@@ -5,7 +5,7 @@ var configFile = './db-config.json'
 var config
 
 try {
-  config = require('confiFile')
+  config = require(configFile)
 } catch (err) {
   config = {}
   console.log('Could not open file "' + configFile + '": ', err)
@@ -22,16 +22,29 @@ const mysqlClient = new Sequelize(
   }
 )
 
-const Workout = mysqlClient.define('workout', {
-  id: {
-    type: Sequelize.STRING,
+const User = mysqlClient.define('user', {
+  user_id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
     primaryKey: true
   },
+  username: {
+    type: Sequelize.STRING(60),
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: 'BINARY(60)',
+    allowNull: false,
+  },
+  first_name: Sequelize.STRING(60),
+  last_name: Sequelize.STRING(60),
+  email: Sequelize.STRING(100),
   
 })
 
-Workout.sync().then(() => {
+User.sync().then(() => {
   console.log('mysql connection ready')
 })
 
-module.exports = Workout
+module.exports = User

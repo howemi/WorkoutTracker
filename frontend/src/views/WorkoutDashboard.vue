@@ -21,6 +21,7 @@
         </v-flex>
       </v-layout>
     </v-footer>
+    <Notification/>
   </div>
 </template>
 
@@ -36,11 +37,12 @@
 </style>
 
 <script>
-import WorkoutList from "../components/workout/WorkoutList.vue"
+import WorkoutList from '../components/workout/WorkoutList'
+import Notification from '../components/Notification'
 
 export default {
   name: 'workoutDashboard',
-  components: { WorkoutList },
+  components: { WorkoutList, Notification },
   computed: {
     showWorkoutBar() {
       if(document.documentElement.clientWidth < 600) {

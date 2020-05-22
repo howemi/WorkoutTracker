@@ -10,7 +10,7 @@
             <v-alert
               color="error"
               :value="error"
-              icon="close"
+              icon="mdi-close"
             >
               The username or the password are incorrect.
             </v-alert>

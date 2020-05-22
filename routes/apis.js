@@ -2,6 +2,11 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
+var mysqlRouter = require('./mysqlapis');
+var mongoRouter = require('./mysqlapis')
+
+router.use('/mysql', mysqlRouter);
+router.use('/mongo', mongoRouter);
 
 router.get('/', function(req, res) {
   res.sendFile('index.html', { root: 'public' });
