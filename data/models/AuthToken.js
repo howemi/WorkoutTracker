@@ -16,14 +16,14 @@ const AuthToken = db.define('auth_token', {
     type: Sequelize.INTEGER,
     references: {
       model: User,
-      key: 'user_id'
+      key: 'user_id',
     }
   },
   
 })
 
 // AuthToken.sync({force: true}).then(() => {
-//   console.log('authToken table ready')
+//   console.log('auth_token table ready')
 // })
 
 module.exports = AuthToken

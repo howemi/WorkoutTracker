@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const Workout = require('./Workout')
 
 const Exercise = db.define('exercise', {
   exercise_id: {
@@ -7,7 +8,28 @@ const Exercise = db.define('exercise', {
     autoIncrement: true,
     primaryKey: true
   },
-
+  workout_id: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: Workout,
+      key: 'workout_id',
+    }
+  },
+  name: {
+    type: Sequelize.STRING(60),
+  },
+  type: {
+    type: Sequelize.STRING(20),
+  },
+  reps: {
+    type: Sequelize.INTEGER
+  },
+  seconds: {
+    type: Sequelize.INTEGER,
+  },
+  weight: {
+    type: Sequelize.INTEGER,
+  },
   
 })
 
