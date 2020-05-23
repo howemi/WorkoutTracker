@@ -23,7 +23,7 @@
       </v-list-item>
 
       <v-list-item v-if="openNewWorkoutFormValue">
-          <NewWorkoutForm/>
+        <NewWorkoutForm/>
       </v-list-item>
     </v-list>
     <v-divider></v-divider>

@@ -7,19 +7,23 @@
             <v-toolbar-title>Signup form</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form>
+            <v-form
+            v-model="valid">
               <v-alert
                 :value="userExists"
-                color="error"
+                type="error"
+                :dismissible="true"
+                :text="true"
                 icon="mdi-alert"
-              >This user already exists, try a different set of data.</v-alert>
+              >User already exists.</v-alert>
 
               <v-text-field
                 prepend-icon="mdi-account"
                 name="login"
                 v-model="username"
                 label="Username"
-                :rules="[rules.required]"
+                required
+                :rules="rules.name"
               ></v-text-field>
 
               <v-text-field
@@ -27,7 +31,8 @@
                 name="login"
                 v-model="firstName"
                 label="First Name"
-                :rules="[rules.required]"
+                required
+                :rules="rules.name"
               ></v-text-field>
 
               <v-text-field
@@ -35,7 +40,8 @@
                 name="login"
                 v-model="lastName"
                 label="Last Name"
-                :rules="[rules.required]"
+                required
+                :rules="rules.name"
               ></v-text-field>
 
               <v-text-field
@@ -43,36 +49,39 @@
                 name="email"
                 v-model="email"
                 label="Email"
-                :rules="[rules.required, rules.email]"
+                required
+                :rules="[rules.email]"
               ></v-text-field>
 
               <v-text-field
                 prepend-icon="mdi-lock"
                 name="password"
                 label="Password"
-                :rules="[rules.required]"
+                required
                 type="password"
+                hint="Password must be greater than 8 characters"
                 v-model="password"
+                :rules="rules.password"
               ></v-text-field>
 
               <v-text-field
                 prepend-icon="mdi-lock-outline"
                 name="password"
                 label="Confirm Password"
-                :rules="[rules.required]"
+                required
                 type="password"
                 v-model="confirm_password"
-                :error="!valid()"
+                :error="!passwordMatch()"
               ></v-text-field>
             </v-form>
           </v-card-text>
           <v-divider light></v-divider>
           <v-card-actions>
-            <v-btn to="/login" rounded color="black" dark>Login</v-btn>
+            <v-btn to="/login" color="blue" dark>Login</v-btn>
             <v-spacer></v-spacer>
-            <v-btn rounded color="success" @click.prevent="register()">
+            <v-btn color="success" :disabled="!valid" @click.prevent="register()">
               Register
-              <v-icon>mdi-arrow-right</v-icon>
+              <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -85,6 +94,7 @@
     export default {
       name: "signup",
       data: () => ({
+        valid: true,
         userExists: false,
         username: '', 
         firstName: '',
@@ -93,16 +103,23 @@
         password: "",
         confirm_password: "",
         rules: {
-          required: value => !!value || "Required",
           email: value => {
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return pattern.test(value) || "Invalid e-mail.";
-          }
-        }
+          },
+          name: [
+            v => !!v || 'Name is required',
+            v => v.length <= 60 || 'Name must be less than 60 characters',
+          ],
+          password: [
+            v => !!v || 'Password is required',
+            v => v.length > 8 || 'Password must be greater than 8 characters'
+          ],
+        },
       }),
       methods: {
         register() {
-          if (this.valid()) {
+          if (this.valid) {
             this.$store.dispatch('REGISTER', {
               username: this.username,
               firstName: this.firstName,
@@ -125,7 +142,7 @@
             })
           }
         },
-        valid() {
+        passwordMatch() {
           return this.password === this.confirm_password;
         }
       }

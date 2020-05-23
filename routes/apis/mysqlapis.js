@@ -12,6 +12,7 @@ var bcrypt = require('bcryptjs')
 
 
 router.post('/register', async ({ body }, res) => {
+  
   Auth.hashPassword(body.password, 12, (err, hash) => {
     if (err) {
       // throw an error

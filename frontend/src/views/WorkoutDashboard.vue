@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:style="{maxHeight: '96.3vh', height: 'calc(100% - 36px)'}">
+  <div v-bind:style="{maxHeight: '96.3vh', height: '100%'}">
     <v-container fluid fill-height pl-0 pr-0 pb-0 pt-0>
       <v-layout row align-space-between justify-space-between>
         <transition name="slide-fade">
@@ -13,14 +13,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <v-footer height="auto" color="indigo">
-      <v-layout justify-center>
-        <v-flex indigo white--text text-xs-center>
-          &copy;2020
-          <strong>Olympiate</strong>
-        </v-flex>
-      </v-layout>
-    </v-footer>
+    
     <Notification/>
   </div>
 </template>

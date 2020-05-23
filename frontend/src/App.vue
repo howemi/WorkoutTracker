@@ -9,12 +9,12 @@
         <v-btn
           text
         >
-          Home
+          Olympiate
         </v-btn>
       </router-link>
       <router-link to="/workouts">
         <v-btn
-                text
+          text
         >
           Workouts
         </v-btn>
@@ -22,16 +22,29 @@
       <v-spacer></v-spacer>
       <router-link to="/login">
         <v-btn
-                text
+          text
         >
-          Sign in
+          Log in
         </v-btn>
       </router-link>
     </v-app-bar>
 
     <v-content>
-      <router-view></router-view>
+
+
+        <!-- If using vue-router -->
+        <router-view></router-view>
+
     </v-content>
+
+    <v-footer height="auto" color="indigo">
+      <v-layout justify-center>
+        <v-flex indigo white--text text-xs-center>
+          &copy;2020
+          <strong>Olympiate</strong>
+        </v-flex>
+      </v-layout>
+    </v-footer>
   </v-app>
 </template>
 
