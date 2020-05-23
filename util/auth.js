@@ -8,10 +8,12 @@ module.exports = {
   },
   compare: (password, dbHash, callback) => {
     bcrypt.compare(password, dbHash, (err, match) => {
-      if(match) {
-        callback(null, true)
-      } else {
+      if(err) {
+        throw err
+      } else if(!match) {
         callback('Invalid password', null)
+      } else {
+        callback(null, true)
       }
     })
   },
