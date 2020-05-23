@@ -127,17 +127,19 @@
               email: this.email,
               password: this.password
             })
-            .then(({ status }) => {
-              status;
+            .then(({ response }) => {
+              response;
+              console.log("successful user creation");
               this.$store.commit("SET_NOTIFICATION", {
                 display: true,
-                text: 'Your account has been successfully created! you can now login.',
+                text: 'Your account has been successfully created! Logging in.',
                 alertClass: "danger"
               });
-              this.$router.push('/login')
+              this.$router.push('/');
             })
             .catch (error => {
               error;
+              console.log("error creating user!!")
               this.userExists = true;
             })
           }

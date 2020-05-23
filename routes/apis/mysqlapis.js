@@ -31,8 +31,19 @@ router.post('/register', async ({ body }, res) => {
       })
       newUser.save()
         .then(user => {
-          console.log(user.get('username'))
-          res.send('Success!')
+          console.log(newUser.get('username'))
+          var newAuthToken = AuthToken.build({
+            token: Auth.makeid(32),
+            user_id: newUser.user_id
+          })
+          newAuthToken.save()
+          .then(token => {
+            console.log('Authentication successful for', body.username)
+            res.send({ token: token })
+          })
+          .catch(err => {
+            res.status(500).send('Server error')
+          })
         })
         .catch(err => {
           console.log(err.errors[0].message)

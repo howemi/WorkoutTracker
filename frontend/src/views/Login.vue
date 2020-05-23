@@ -61,8 +61,8 @@
     error: false
   }),
   methods: {
-    login() {
-      this.$store.dispatch("LOGIN", {
+    async login() {
+      await this.$store.dispatch("LOGIN", {
         username: this.username,
         password: this.password
       })
