@@ -1,6 +1,6 @@
 <template>
-  <div v-bind:style="{maxHeight: '96.3vh', height: '100%'}">
-    <v-container fluid fill-height pl-0 pr-0 pb-0 pt-0>
+  <div v-bind:style="{height: '100%'}">
+    <v-container fluid fill-height pa-0 >
       <v-layout row align-space-between justify-space-between>
         <transition name="slide-fade">
           <v-flex sm4 md3 pr-2 v-if="showWorkoutBar">
@@ -8,7 +8,7 @@
           </v-flex>
         </transition>
         
-        <v-flex sm8 md9 pr-2 pl-4 v-if="showWorkoutView">
+        <v-flex sm8 md9 pr-3 pl-2 v-if="showWorkoutView">
           <router-view name="workout" :key="$route.fullPath"></router-view>
         </v-flex>
       </v-layout>

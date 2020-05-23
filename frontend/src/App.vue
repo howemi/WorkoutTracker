@@ -30,20 +30,23 @@
     </v-app-bar>
 
     <v-content>
-
-
-        <!-- If using vue-router -->
-        <router-view></router-view>
-
+      <router-view></router-view>
     </v-content>
 
-    <v-footer height="auto" color="indigo">
-      <v-layout justify-center>
-        <v-flex indigo white--text text-xs-center>
-          &copy;2020
-          <strong>Olympiate</strong>
-        </v-flex>
-      </v-layout>
+    <v-footer
+      color="info lighten-1"
+      padless
+    >
+      <v-row
+        justify="center"
+      >
+        <v-col
+          class="primary lighten-2 py-1 text-center white--text"
+          cols="12"
+        >
+          {{ new Date().getFullYear() }} — <strong>Olympiate</strong>
+        </v-col>
+      </v-row>
     </v-footer>
   </v-app>
 </template>

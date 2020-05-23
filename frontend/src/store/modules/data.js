@@ -19,6 +19,9 @@ export default {
     SET_WORKOUTS: (state, payload) => {
       state.workouts = payload
     },
+    SET_EXERCISES: (state, payload) => {
+      state.workout[payload.id] = payload.exercises
+    },
     ADD_WORKOUT: (state, payload) => {
       state.workouts.unshift(payload)
     },
@@ -38,6 +41,16 @@ export default {
             reject(error);
           });
       });
+    },
+    GET_EXERCISES: async ({ commit }, payload) => {
+      //let { data } = await axios.get(`exercises/${payload.id}`);
+      let data = {
+        id: 1,
+        exercises: []
+      }
+
+      commit("SET_EXERCISES", data);
+      payload;
     },
     GET_WORKOUTS: async ({ commit }) => {
       //let { data } = await axios.get(`workouts`);
