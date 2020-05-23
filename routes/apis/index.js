@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var mysqlRouter = require('./mysqlapis');
-var mongoRouter = require('./mysqlapis')
+var mongoRouter = require('./mongoapis')
 
 router.use('/mysql', mysqlRouter);
 router.use('/mongo', mongoRouter);

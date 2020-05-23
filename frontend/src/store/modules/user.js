@@ -1,7 +1,5 @@
 
 import axios from "axios";
-const bcrypt = require('bcryptjs')
-const saltRounds = 10
 
 export default {
   state: {},
@@ -26,31 +24,18 @@ export default {
     REGISTER: ({commit}, payload) => {
       commit;
       //hash password
-      bcrypt.genSalt(saltRounds, (err, salt) => {
-        if(err) {
-          throw err
-        } else {
-          bcrypt.hash(payload.password, salt, (err, hash) => {
-            if(err) {
-              throw err
-            } else {
-              payload.password = hash
-              return new Promise((resolve, reject) => {
-                axios
-                  .post(`register`, payload)
-                  .then(({ status }) => {
-                    if (status === 201) {
-                      resolve(true);
-                    }
-                  })
-                  .catch(error => {
-                    reject(error);
-                  });
-              });
-            }
-          })
-        }
-      })
+      return new Promise((resolve, reject) => {
+        axios
+        .post(`register`, payload)
+        .then(({ status }) => {
+          if (status === 201) {
+            resolve(true);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+      });
     }, // end Register
   }
 };

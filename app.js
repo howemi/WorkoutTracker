@@ -3,8 +3,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes');
 var apisRouter = require('./routes/apis');
+
+// Database
+const db = require('./data/db');
+
+// Test DB
+db.authenticate()
+  .then(() => console.log('Database connected...'))
+  .catch(err => console.log('Error: ' + err))
 
 var app = express();
 
