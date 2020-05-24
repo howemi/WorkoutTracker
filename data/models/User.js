@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const AuthToken = require('./AuthToken')
+const Workout = require('./Workout')
 
 const User = db.define('user', {
   user_id: {

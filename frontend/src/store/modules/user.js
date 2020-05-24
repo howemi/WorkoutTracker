@@ -2,17 +2,28 @@
 import axios from "axios";
 
 export default {
-  state: {},
-  getters: {},
-  mutations: {},
+  state: {
+    token: null,
+  },
+  getters: {
+    TOKEN: state => {
+      return state.token
+    },
+  },
+  mutations: {
+    SET_AUTH_TOKEN: (state, payload) => {
+      state.token = payload
+    }
+  },
   actions: {
     LOGIN: ({commit}, payload) => {
       commit;
       return new Promise((resolve, reject) => {
         axios
           .post(`login`, payload)
-          .then(({ status }) => {
-            if (status === 200) {
+          .then((response) => {
+            if (response.status === 200) {
+              commit('SET_AUTH_TOKEN', response.data.token)
               resolve(true);
             }
           })
@@ -22,13 +33,14 @@ export default {
       });
     },
     REGISTER: ({commit}, payload) => {
-      commit;
+      // commit;
       //hash password
       return new Promise((resolve, reject) => {
         axios
         .post(`register`, payload)
-        .then(({ status }) => {
-          if (status === 201) {
+        .then((response) => {
+          if (response.status === 200) {
+            commit('SET_AUTH_TOKEN', response.data.token)
             resolve(true);
           }
         })

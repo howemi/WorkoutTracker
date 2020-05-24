@@ -10,9 +10,46 @@ var AuthToken = require('../../data/models/AuthToken')
 var Auth = require('../../util/auth')
 var bcrypt = require('bcryptjs')
 
+router.get('/exercises/:exerciseId', (req, res) => {
+  Auth.checkAuthToken(req, (err, userId) => {
+    if(err) {
+      res.status(403).send()
+    } else {
+      res.send({id: userId})
+    }
+  })
+})
+
+router.post('/workouts', (req, res) => {
+  Auth.checkAuthToken(req, (err, userId) => {
+    if(err) {
+      res.status(403).send()
+    } else {
+      User.findOne({where: {user_id: userId}})
+        .then(user => {
+          var newWorkout = Workout.build({
+            user_id: userId,
+            name: req.body.name,
+            start_time: new Date().getTime()
+          })
+          newWorkout.save()
+            .then(workout => {
+              res.send({workoutId: workout.workout_id,
+                name: workout.name,
+                startTime: workout.start_time})
+            })
+            .catch(err => {
+              throw err
+            })
+        })
+        .catch(err => {
+          throw err
+        })
+    }
+  })
+})
 
 router.post('/register', async ({ body }, res) => {
-  
   Auth.hashPassword(body.password, 12, (err, hash) => {
     if (err) {
       // throw an error
@@ -39,7 +76,7 @@ router.post('/register', async ({ body }, res) => {
           newAuthToken.save()
           .then(token => {
             console.log('Authentication successful for', body.username)
-            res.send({ token: token })
+            res.send({ token: token.token })
           })
           .catch(err => {
             res.status(500).send('Server error')
@@ -77,7 +114,7 @@ router.post('/login', async ({ body }, res) => {
             newAuthToken.save()
               .then(token => {
                 console.log('Authentication successful for', body.username)
-                res.send({ token: token })
+                res.send({ token: token.token })
               })
               .catch(err => {
                 res.status(500).send('Server error')

@@ -8,7 +8,12 @@
     </v-toolbar>
     
     <v-list>
-      <v-list-item color="blue" @click.prevent="openNewWorkoutForm()" v-if="!isOpen">
+      <v-list-item
+        color="blue"
+        @click.prevent="openNewWorkoutForm()"
+        v-if="!openNewWorkoutFormValue"
+        key="openForm"
+      >
         <v-list-item-content>
           <v-list-item-title>Create new workout</v-list-item-title>
         </v-list-item-content>
@@ -25,7 +30,7 @@
       </v-list-item>
     </v-list>
     <v-divider></v-divider>
-    <v-list style="height: calc(100% - 135px); overflow-y: auto">
+    <v-list>
       
       <v-list-item
         :to="{ name: 'workout', params: { id: workout.id} }"
@@ -53,21 +58,13 @@
     data: () => ({}),
     computed: {
       ...mapGetters(['WORKOUTS']),
-      openNewWorkoutFormValue: {
-          get () {
-              return this.$store.getters.NEW_WORKOUT_FORM
-          }, 
-          set (value) {
-              this.$store.commit("SET_NEW_WORKOUT_FORM", value)
-          }
+      openNewWorkoutFormValue() {
+        return this.$store.getters.NEW_WORKOUT_FORM
       },
-      isOpen() {
-          return this.$store.getters.NEW_WORKOUT_FORM
-      }
     },
     methods: {
       openNewWorkoutForm() {
-          this.$store.commit("SET_NEW_WORKOUT_FORM", true)
+        this.$store.commit('SET_NEW_WORKOUT_FORM', true)
       },
       EXERCISE_COUNT(index) {
         return this.$store.getters.EXERCISE_COUNT(index);

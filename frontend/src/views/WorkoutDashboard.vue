@@ -1,6 +1,6 @@
 <template>
-  <div v-bind:style="{height: '100%'}">
-    <v-container fluid fill-height pa-0 >
+  <v-layout v-bind:style="{height: '100%'}" v-if="TOKEN">
+    <v-container fluid fill-height pa-0 pl-3>
       <v-layout row align-space-between justify-space-between>
         <transition name="slide-fade">
           <v-flex sm4 md3 pr-2 v-if="showWorkoutBar">
@@ -15,7 +15,8 @@
     </v-container>
     
     <Notification/>
-  </div>
+  </v-layout>
+  <Unauthorized v-else />
 </template>
 
 <style scoped>
@@ -32,11 +33,14 @@
 <script>
 import WorkoutList from '../components/workout/WorkoutList'
 import Notification from '../components/Notification'
+import Unauthorized from '../components/Unauthorized'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'workoutDashboard',
-  components: { WorkoutList, Notification },
+  components: { WorkoutList, Notification, Unauthorized},
   computed: {
+    ...mapGetters(['TOKEN']),
     showWorkoutBar() {
       if(document.documentElement.clientWidth < 600) {
         if(this.$route.name === 'workoutDashboard') {

@@ -53,7 +53,7 @@
 
 <script>
     export default {
-        name: "login",
+        name: 'login',
   data: () => ({
     username: '',
     password: '',
@@ -61,14 +61,14 @@
     error: false
   }),
   methods: {
-    async login() {
-      await this.$store.dispatch("LOGIN", {
+    login() {
+      this.$store.dispatch('LOGIN', {
         username: this.username,
         password: this.password
       })
       .then(success => {
           success;
-        this.$router.push("/")
+        this.$router.push('/')
       })
       .catch(error => {
           error;

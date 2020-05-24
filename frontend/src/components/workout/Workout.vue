@@ -148,6 +148,7 @@
 
     methods: {
       initialize () {
+        this.$store.dispatch("GET_EXERCISES", {workoutID: this.$route.params.id})
         this.desserts = [
           {
             name: 'Frozen Yogurt',

@@ -1,9 +1,8 @@
-// import Vue from "vue"
-import axios from "axios"
+import axios from 'axios'
 
 export default {
   state: {
-    workouts: []
+    workouts: [],
   },
   getters: {
     WORKOUTS: state => {
@@ -20,19 +19,23 @@ export default {
       state.workouts = payload
     },
     SET_EXERCISES: (state, payload) => {
-      state.workout[payload.id] = payload.exercises
+      state.workouts.find(workout => {
+        workout.id === payload.id
+      // }).exercises = payload.exercises
+    }).exercises = 9
     },
     ADD_WORKOUT: (state, payload) => {
       state.workouts.unshift(payload)
     },
   },
   actions: {
-    POST_WORKOUT: ({ commit }, payload) => {
+    POST_WORKOUT: (context, payload) => {
       return new Promise((resolve, reject) => {
         axios
-          .post(`workouts`, payload)
+          .post(`workouts`, payload,
+          { headers: {Authorization: `Bearer ${context.rootState.User.token}` }})
           .then(({ data, status }) => {
-            commit("ADD_WORKOUT", data);
+            context.commit("ADD_WORKOUT", data);
             if (status === 200 || status === 201) {
               resolve({ data, status });
             }
@@ -42,15 +45,10 @@ export default {
           });
       });
     },
-    GET_EXERCISES: async ({ commit }, payload) => {
-      //let { data } = await axios.get(`exercises/${payload.id}`);
-      let data = {
-        id: 1,
-        exercises: []
-      }
-
-      commit("SET_EXERCISES", data);
-      payload;
+    GET_EXERCISES: async (context, { workoutID }) => {
+      let { data } = await axios.get(`exercises/${workoutID}`, 
+      { headers: { Authorization: `Bearer ${context.rootState.User.token}` } });
+      context.commit("SET_EXERCISES", data);
     },
     GET_WORKOUTS: async ({ commit }) => {
       //let { data } = await axios.get(`workouts`);

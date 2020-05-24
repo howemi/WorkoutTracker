@@ -1,4 +1,5 @@
 var bcrypt = require('bcryptjs')
+var AuthToken = require('../data/models/AuthToken')
 
 module.exports = {
   hashPassword: (password, rounds, callback) => {
@@ -25,5 +26,29 @@ module.exports = {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
- }
+  },
+  /**
+   * @param request the request object
+   * @param callback function. format: fn(err, userID)
+   */
+  checkAuthToken: (request, callback) => {
+    var authHeader = request.header('Authorization').split(" ")[1]
+    if(authHeader !== undefined) {
+      AuthToken.findOne({where: {token: authHeader}})
+        .then(token => {
+          if(token) {
+            callback(false, token.user_id)
+          } else {
+            callback(true, null)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+          throw err
+        })
+    } else {
+      callback(true, null)
+    }
+  }
+ 
 }

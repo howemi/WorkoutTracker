@@ -129,7 +129,6 @@
             })
             .then(({ response }) => {
               response;
-              console.log("successful user creation");
               this.$store.commit("SET_NOTIFICATION", {
                 display: true,
                 text: 'Your account has been successfully created! Logging in.',
@@ -139,7 +138,6 @@
             })
             .catch (error => {
               error;
-              console.log("error creating user!!")
               this.userExists = true;
             })
           }
