@@ -25,6 +25,7 @@
                 name="login"
                 label="Login"
                 type="text"
+                @keyup.enter="login()"
               ></v-text-field>
 
               <v-text-field
@@ -33,6 +34,7 @@
                 name="password"
                 label="Password"
                 type="password"
+                @keyup.enter="login()"
               ></v-text-field>
             </v-card-text>
             <v-divider light></v-divider>

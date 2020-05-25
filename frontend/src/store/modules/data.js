@@ -50,51 +50,52 @@ export default {
       { headers: { Authorization: `Bearer ${context.rootState.User.token}` } });
       context.commit("SET_EXERCISES", data);
     },
-    GET_WORKOUTS: async ({ commit }) => {
-      //let { data } = await axios.get(`workouts`);
-      let data = [
-        {
-          id: '1',
-          date: 'today',
-          exercises: [],
-        },
-        {
-          id: '2',
-          date: 'today',
-          exercises: [],
-        },
-        {
-          id: '3',
-          date: 'today',
-          exercises: [],
-        },
-        {
-          id: '4',
-          date: 'today',
-          exercises: [],
-        },
-        {
-          id: '5',
-          date: 'today',
-          exercises: [],
-        },
-        {
-          id: '6',
-          date: 'today',
-          exercises: [],
-        },
-        {
-          id: '7',
-          date: 'today',
-          exercises: [],
-        },
-        {
-          id: '8',
-          date: 'today',
-          exercises: [],
-        },
-      ]
-      commit("SET_WORKOUTS", data);
+    GET_WORKOUTS: async (context) => {
+      let { data } = await axios.get(`workouts`,
+        { headers: {Authorization: `Bearer ${context.rootState.User.token}` }});
+      // let data = [
+      //   {
+      //     id: '1',
+      //     date: 'today',
+      //     exercises: [],
+      //   },
+      //   {
+      //     id: '2',
+      //     date: 'today',
+      //     exercises: [],
+      //   },
+      //   {
+      //     id: '3',
+      //     date: 'today',
+      //     exercises: [],
+      //   },
+      //   {
+      //     id: '4',
+      //     date: 'today',
+      //     exercises: [],
+      //   },
+      //   {
+      //     id: '5',
+      //     date: 'today',
+      //     exercises: [],
+      //   },
+      //   {
+      //     id: '6',
+      //     date: 'today',
+      //     exercises: [],
+      //   },
+      //   {
+      //     id: '7',
+      //     date: 'today',
+      //     exercises: [],
+      //   },
+      //   {
+      //     id: '8',
+      //     date: 'today',
+      //     exercises: [],
+      //   },
+      // ]
+      context.commit("SET_WORKOUTS", data);
     },
   },
 }

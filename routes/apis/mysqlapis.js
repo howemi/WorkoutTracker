@@ -20,6 +20,22 @@ router.get('/exercises/:exerciseId', (req, res) => {
   })
 })
 
+router.get('/workouts', (req, res) => {
+  Auth.checkAuthToken(req, (err, userId) => {
+    if(err) {
+      res.status(403).send()
+    } else {
+      Workout.findAll({where: {user_id: userId}})
+        .then(workouts => {
+          res.send(workouts)
+        })
+        .catch(err => {
+          throw err
+        })
+    }
+  })
+})
+
 router.post('/workouts', (req, res) => {
   Auth.checkAuthToken(req, (err, userId) => {
     if(err) {

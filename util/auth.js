@@ -32,8 +32,10 @@ module.exports = {
    * @param callback function. format: fn(err, userID)
    */
   checkAuthToken: (request, callback) => {
-    var authHeader = request.header('Authorization').split(" ")[1]
+    var authHeader = request.header('Authorization')
     if(authHeader !== undefined) {
+      // Remove 'Bearer' and get token
+      authHeader = authHeader.split(" ")[1]
       AuthToken.findOne({where: {token: authHeader}})
         .then(token => {
           if(token) {

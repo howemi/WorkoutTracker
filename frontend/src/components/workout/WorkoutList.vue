@@ -33,16 +33,16 @@
     <v-list>
       
       <v-list-item
-        :to="{ name: 'workout', params: { id: workout.id} }"
+        :to="{ name: 'workout', params: { id: workout.workout_id} }"
         v-for="(workout, key) in WORKOUTS"
         :key="key"
       >
         <v-list-item-content>
-          <v-list-item-title>{{ workout.date }}</v-list-item-title>
+          <v-list-item-title>{{ workout.name }}</v-list-item-title>
         </v-list-item-content>
-        <v-list-item-action>
-          <v-list-item-title>{{ EXERCISE_COUNT(workout.id) }}</v-list-item-title>
-        </v-list-item-action>
+        <!-- <v-list-item-action>
+          <v-list-item-title>{{ EXERCISE_COUNT(workout.workout_id) }}</v-list-item-title>
+        </v-list-item-action> -->
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -58,13 +58,18 @@
     data: () => ({}),
     computed: {
       ...mapGetters(['WORKOUTS']),
-      openNewWorkoutFormValue() {
-        return this.$store.getters.NEW_WORKOUT_FORM
+      openNewWorkoutFormValue: {
+        get() {
+          return this.$store.getters.NEW_WORKOUT_FORM
+        },
+        set(value) {
+          this.$store.commit('SET_NEW_WORKOUT_FORM', value)
+        },
       },
     },
     methods: {
       openNewWorkoutForm() {
-        this.$store.commit('SET_NEW_WORKOUT_FORM', true)
+        this.openNewWorkoutFormValue = true
       },
       EXERCISE_COUNT(index) {
         return this.$store.getters.EXERCISE_COUNT(index);
