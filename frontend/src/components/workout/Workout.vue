@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!loading">
     
     <v-data-table
     :headers="headers"
@@ -84,10 +84,12 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
 
   export default {
     name: 'workout',
     data: () => ({
+      loading: true,
       dialog: false,
       snack: false,
       snackColor: '',
@@ -107,7 +109,6 @@
         { text: 'Reps', value: 'reps' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
-      exercises: [],
       editedIndex: -1,
       exercisetypes: ['Strength', 'Endurance'],
       editedItem: {
@@ -128,6 +129,15 @@
       },
     }),
     computed: {
+      ...mapGetters(['WORKOUT_EXERCISES']),
+      exercises: {
+        get() {
+          return this.WORKOUT_EXERCISES(this.id)
+        },
+        set(value) {
+          console.log('CALLING SET EXERCISES WITH VALUE',value)
+        },
+      },
       formTitle () {
         return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
       },
@@ -145,47 +155,26 @@
       },
     },
 
-    created () {
-      this.initialize()
+    mounted () {
+      if(this.WORKOUT_EXERCISES(this.id) === undefined) {
+        this.initialize()
+      } else {
+        this.loading = false
+      }
     },
 
     methods: {
       initialize () {
-        this.exercises = [
-          {
-            setid: 0,
-            name: 'Pullups',
-            type: 'Strength',
-            weight: 0,
-            reps: 10,
-          },
-          {
-            setid: 1,
-            name: 'Mile',
-            type: 'Endurance',
-            dur: 7.30,
-          },
-          {
-            setid: 0,
-            name: 'Pullups',
-            type: 'Strength',
-            weight: 0,
-            reps: 10,
-          },
-          {
-            setid: 1,
-            name: 'Mile',
-            type: 'Endurance',
-            dur: 7.30,
-          },
-        ]
+        this.$store.dispatch("GET_EXERCISES", {workoutId: this.$route.params.id})
+        .then(() => {
+          this.loading = false
+        })
       },
       editItem (item) {
         this.editedIndex = this.exercises.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
-
       deleteItem (item) {
         const index = this.exercises.indexOf(item)
         confirm('Are you sure you want to delete this item?') && this.exercises.splice(index, 1)
@@ -197,7 +186,6 @@
           this.editedIndex = -1
         })
       },
-
       save () {
         if (this.editedIndex > -1) {
           Object.assign(this.exercises[this.editedIndex], this.editedItem)

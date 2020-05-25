@@ -15,6 +15,9 @@ const Exercise = db.define('exercise', {
       key: 'workout_id',
     }
   },
+  set_id: {
+    type: Sequelize.INTEGER
+  },
   name: {
     type: Sequelize.STRING(60),
   },

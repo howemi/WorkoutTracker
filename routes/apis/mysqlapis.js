@@ -72,7 +72,6 @@ router.post('/register', async ({ body }, res) => {
       res.status(500).send()
     } else {
       // store the new hash in the database etc
-      console.log('password:', body.password, 'hash', hash)
       var newUser = User.build({
         username: body.username.toLowerCase(),
         password: hash,
@@ -84,7 +83,6 @@ router.post('/register', async ({ body }, res) => {
       })
       newUser.save()
         .then(user => {
-          console.log(newUser.get('username'))
           var newAuthToken = AuthToken.build({
             token: Auth.makeid(32),
             user_id: newUser.user_id
@@ -99,7 +97,7 @@ router.post('/register', async ({ body }, res) => {
           })
         })
         .catch(err => {
-          console.log(err.errors[0].message)
+          console.error(err.errors[0].message)
           if (err.errors[0].path === 'username' &&
             err.errors[0].type === 'unique violation') {
             res.status(403).send('Username already taken')
@@ -112,14 +110,11 @@ router.post('/register', async ({ body }, res) => {
 });
 
 router.post('/login', async ({ body }, res) => {
-  console.log("Login Request for", body.username)
   User.findOne({ where: { username: body.username.toLowerCase() } })
     .then(user => {
       if (user == null) {
         res.status(403).send('Could not find user');
       } else {
-        console.log(body.password,
-          user.password.toString('binary'))
         Auth.compare(body.password,
           user.password.toString('binary'), (err, match) => {
           if (match) {
@@ -142,7 +137,7 @@ router.post('/login', async ({ body }, res) => {
       }
     })
     .catch(err => {
-      console.log(err)
+      console.error(err)
     })
 });
 

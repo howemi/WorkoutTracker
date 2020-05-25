@@ -68,6 +68,11 @@
       },
     },
     methods: {
+      initialize() {
+        if(this.WORKOUTS.length === 0) {
+          this.$store.dispatch("GET_WORKOUTS")
+        }
+      },
       openNewWorkoutForm() {
         this.openNewWorkoutFormValue = true
       },
@@ -76,7 +81,7 @@
       }
     },
     mounted () {
-     this.$store.dispatch("GET_WORKOUTS")
+     this.initialize()
     }
   }
 </script>
