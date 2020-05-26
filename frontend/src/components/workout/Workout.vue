@@ -9,7 +9,7 @@
   >
     <template v-slot:top>
       <v-toolbar flat color="white">
-        <v-toolbar-title>{{ rightNow }}</v-toolbar-title>
+        <v-toolbar-title>{{ CURRENT_WORKOUT(id).name }}</v-toolbar-title>
         <v-divider
           class="mx-4"
           inset
@@ -35,7 +35,7 @@
                     <v-select :items="exercisetypes" v-model="editedItem.type" label="Exercise Type"></v-select>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.dur" label="Duration"></v-text-field>
+                    <v-text-field v-model="editedItem.seconds" label="Duration (seconds)"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field v-model="editedItem.weight" label="Weight"></v-text-field>
@@ -72,7 +72,7 @@
       </v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Reset</v-btn>
+      Add an exercise to get started
     </template>
   </v-data-table>
 
@@ -94,17 +94,18 @@
       snack: false,
       snackColor: '',
       snackText: '',
+      exercises: [],
       max25chars: v => v.length <= 25 || 'Input too long!',
       pagination: {},
       headers: [
         {
           text: 'Name',
           align: 'start',
-          sortable: false,
+          sortable: true,
           value: 'name',
         },
         { text: 'Type', value: 'type' },
-        { text: 'Duration', value: 'dur' },
+        { text: 'Duration (seconds)', value: 'seconds' },
         { text: 'Weight', value: 'weight' },
         { text: 'Reps', value: 'reps' },
         { text: 'Actions', value: 'actions', sortable: false },
@@ -115,7 +116,7 @@
         setid: 0,
         name: '',
         type: '',
-        dur: 0,
+        seconds: 0,
         weight: 0,
         reps: 0,
       },
@@ -123,21 +124,13 @@
         setid: 0,
         name: '',
         type: '',
-        dur: 0,
+        seconds: 0,
         weight: 0,
         reps: 0,
       },
     }),
     computed: {
-      ...mapGetters(['WORKOUT_EXERCISES']),
-      exercises: {
-        get() {
-          return this.WORKOUT_EXERCISES(this.id)
-        },
-        set(value) {
-          console.log('CALLING SET EXERCISES WITH VALUE',value)
-        },
-      },
+      ...mapGetters(['WORKOUT_EXERCISES', 'CURRENT_WORKOUT']),
       formTitle () {
         return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
       },
@@ -156,19 +149,21 @@
     },
 
     mounted () {
-      if(this.WORKOUT_EXERCISES(this.id) === undefined) {
-        this.initialize()
-      } else {
-        this.loading = false
-      }
+      this.initialize()
     },
 
     methods: {
       initialize () {
-        this.$store.dispatch("GET_EXERCISES", {workoutId: this.$route.params.id})
-        .then(() => {
+        if(this.WORKOUT_EXERCISES(this.id) === undefined) {
+          this.$store.dispatch("GET_EXERCISES", {workoutId: this.$route.params.id})
+          .then(() => {
+            this.exercises = this.WORKOUT_EXERCISES(this.id)
+            this.loading = false
+          })
+        } else {
+          this.exercises = this.WORKOUT_EXERCISES(this.id)
           this.loading = false
-        })
+        }
       },
       editItem (item) {
         this.editedIndex = this.exercises.indexOf(item)
@@ -177,7 +172,11 @@
       },
       deleteItem (item) {
         const index = this.exercises.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.exercises.splice(index, 1)
+        confirm('Are you sure you want to delete this item?') && this.$store.dispatch('DELETE_EXERCISE', {
+          exerciseId: item.exercise_id,
+          workoutId: this.id,
+          index: index,
+        })
       },
       close () {
         this.dialog = false
@@ -187,10 +186,25 @@
         })
       },
       save () {
+        // this.loading = true
         if (this.editedIndex > -1) {
-          Object.assign(this.exercises[this.editedIndex], this.editedItem)
+          this.$store.dispatch('UPDATE_EXERCISE', {
+            editedItem: this.editedItem,
+            editedIndex: this.editedIndex,
+            workoutId: this.id,
+          })
+            .then(() => {
+              this.exercises = this.WORKOUT_EXERCISES(this.id)
+            })
         } else {
-          this.exercises.push(this.editedItem)
+          // this.loading = true
+          this.$store.dispatch('POST_EXERCISE', {
+            newExercise: this.editedItem,
+            workoutId: this.id,            
+          })
+            .then(() => {
+              this.exercises = this.WORKOUT_EXERCISES(this.id)
+            })
         }
         this.close()
       },

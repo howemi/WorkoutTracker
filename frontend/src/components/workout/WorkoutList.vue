@@ -34,7 +34,7 @@
       
       <v-list-item
         :to="{ name: 'workout', params: { id: workout.workout_id} }"
-        v-for="(workout, key) in WORKOUTS"
+        v-for="(workout, key) in workouts"
         :key="key"
       >
         <v-list-item-content>
@@ -66,6 +66,11 @@
           this.$store.commit('SET_NEW_WORKOUT_FORM', value)
         },
       },
+      workouts: {
+        get() {
+          return this.WORKOUTS
+        }
+      }
     },
     methods: {
       initialize() {

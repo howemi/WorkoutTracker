@@ -18,6 +18,7 @@
               >User already exists.</v-alert>
 
               <v-text-field
+                ref="usernameField"
                 prepend-icon="mdi-account"
                 name="login"
                 v-model="username"
@@ -117,7 +118,13 @@
           ],
         },
       }),
+      mounted() {
+        this.focusInput()
+      },
       methods: {
+        focusInput() {
+          this.$refs.usernameField.focus()
+        },
         register() {
           if (this.valid) {
             this.$store.dispatch('REGISTER', {

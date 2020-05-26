@@ -45,7 +45,7 @@ module.exports = {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
           throw err
         })
     } else {

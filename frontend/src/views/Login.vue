@@ -20,6 +20,7 @@
             </v-alert>
             <v-card-text>
               <v-text-field
+                ref="usernameField"
                 v-model="username"
                 prepend-icon="mdi-account"
                 name="login"
@@ -54,31 +55,37 @@
 </template>
 
 <script>
-    export default {
-        name: 'login',
-  data: () => ({
-    username: '',
-    password: '',
-    valid: true,
-    error: false
-  }),
-  methods: {
-    login() {
-      this.$store.dispatch('LOGIN', {
-        username: this.username,
-        password: this.password
-      })
-      .then(success => {
-          success;
-        this.$router.push('/workouts')
-      })
-      .catch(error => {
-          error;
-        this.error = true;
-      })
+  export default {
+    name: 'login',
+    data: () => ({
+      username: '',
+      password: '',
+      valid: true,
+      error: false
+    }),
+    mounted() {
+      this.focusInput()
+    },
+    methods: {
+      focusInput() {
+        this.$refs.usernameField.focus()
+      },
+      login() {
+        this.$store.dispatch('LOGIN', {
+          username: this.username,
+          password: this.password
+        })
+        .then(success => {
+            success;
+          this.$router.push('/workouts')
+        })
+        .catch(error => {
+            error;
+          this.error = true;
+        })
+      }
     }
   }
-    }
 </script>
 
 <style scoped>

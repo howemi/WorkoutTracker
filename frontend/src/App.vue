@@ -20,13 +20,22 @@
         </v-btn>
       </router-link>
       <v-spacer></v-spacer>
-      <router-link to="/login">
+      <router-link 
+        v-if="!loggedIn"
+        to="/login">
         <v-btn
           text
         >
-          {{loginText()}}
+          Log in
         </v-btn>
       </router-link>
+      <v-btn
+        v-else
+        @click.prevent="logout()"
+        text
+      >
+      Log out
+      </v-btn>
     </v-app-bar>
 
     <v-content>
@@ -61,16 +70,18 @@ export default {
     //
   }),
   computed: {
-    ...mapGetters(['TOKEN'])
+    ...mapGetters(['TOKEN']),
+    loggedIn() {
+      return this.TOKEN !== null
+    }
   },
   methods: {
-    loginText() {
-      if (this.TOKEN) {
-        return "Logged In"
-      }
-      else {
-        return "Log In"
-      }
+    logout() {
+      this.$store.dispatch('INVALIDATE_TOKEN')
+        .then(() => {
+          this.$router.push('/')
+        })
+      this.$store.commit('CLEAR_WORKOUTS')
     }
   }
 };

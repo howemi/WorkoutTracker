@@ -7,10 +7,10 @@
     right
     :timeout="NOTIFICATION.timeout"
   >
-      <v-icon>notification_important</v-icon>
+      <v-icon>mdi-bell</v-icon>
       {{ NOTIFICATION.text }}
-      <v-btn flat dark @click.prevent="snackbar = false">
-          <v-icon>clear</v-icon>
+      <v-btn text dark @click.prevent="snackbar = false">
+          <v-icon>mdi-close</v-icon>
       </v-btn>
   </v-snackbar>
 </template>

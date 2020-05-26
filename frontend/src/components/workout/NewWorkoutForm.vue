@@ -69,6 +69,7 @@
         })
           .then(() => {
             this.$store.commit("SET_NEW_WORKOUT_FORM", false)
+            
           })
           .catch(() => {
             this.loading = false

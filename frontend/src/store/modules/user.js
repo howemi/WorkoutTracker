@@ -16,7 +16,22 @@ export default {
     }
   },
   actions: {
-    LOGIN: ({commit}, payload) => {
+    INVALIDATE_TOKEN: (context) => {
+      return new Promise((resolve, reject) => {
+        axios
+          .post('/logout', { token: context.getters.TOKEN })
+          .then(({ status }) => {
+            if (status === 200) {
+              context.commit('SET_AUTH_TOKEN', null)
+              resolve(true)
+            }
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    LOGIN: ({ commit }, payload) => {
       commit;
       return new Promise((resolve, reject) => {
         axios
@@ -32,21 +47,21 @@ export default {
           });
       });
     },
-    REGISTER: ({commit}, payload) => {
+    REGISTER: ({ commit }, payload) => {
       // commit;
       //hash password
       return new Promise((resolve, reject) => {
         axios
-        .post(`register`, payload)
-        .then((response) => {
-          if (response.status === 200) {
-            commit('SET_AUTH_TOKEN', response.data.token)
-            resolve(true);
-          }
-        })
-        .catch(error => {
-          reject(error);
-        });
+          .post(`register`, payload)
+          .then((response) => {
+            if (response.status === 200) {
+              commit('SET_AUTH_TOKEN', response.data.token)
+              resolve(true);
+            }
+          })
+          .catch(error => {
+            reject(error);
+          });
       });
     }, // end Register
   }

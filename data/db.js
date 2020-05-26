@@ -6,8 +6,8 @@ try {
   config = require(configFile)
 } catch (err) {
   config = {}
-  console.log('Could not open file "' + configFile + '": ', err)
-  console.log('see secret-config-sample.json for an example')
+  console.error('Could not open file "' + configFile + '": ', err)
+  console.error('see secret-config-sample.json for an example')
 }
 
 module.exports = new Sequelize(

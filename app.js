@@ -12,7 +12,7 @@ const db = require('./data/db');
 // Test DB
 db.authenticate()
   .then(() => console.log('Database connected...'))
-  .catch(err => console.log('Error: ' + err))
+  .catch(err => console.error('Error: ' + err))
 
 var app = express();
 
