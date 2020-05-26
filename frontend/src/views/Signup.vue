@@ -134,7 +134,7 @@
                 text: 'Your account has been successfully created! Logging in.',
                 alertClass: "danger"
               });
-              this.$router.push('/');
+              this.$router.push('/workouts');
             })
             .catch (error => {
               error;

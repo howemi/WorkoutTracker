@@ -24,7 +24,7 @@
         <v-btn
           text
         >
-          Log in
+          {{loginText()}}
         </v-btn>
       </router-link>
     </v-app-bar>
@@ -53,10 +53,25 @@
 
 <script>
 
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'App',
   data: () => ({
     //
-  })
+  }),
+  computed: {
+    ...mapGetters(['TOKEN'])
+  },
+  methods: {
+    loginText() {
+      if (this.TOKEN) {
+        return "Logged In"
+      }
+      else {
+        return "Log In"
+      }
+    }
+  }
 };
 </script>

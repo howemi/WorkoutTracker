@@ -70,7 +70,7 @@
       })
       .then(success => {
           success;
-        this.$router.push('/')
+        this.$router.push('/workouts')
       })
       .catch(error => {
           error;
