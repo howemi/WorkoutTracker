@@ -31,19 +31,21 @@
     </v-list>
     <v-divider></v-divider>
     <v-list>
-      
-      <v-list-item
-        :to="{ name: 'workout', params: { id: workout.workout_id} }"
-        v-for="(workout, key) in workouts"
-        :key="key"
-      >
-        <v-list-item-content>
-          <v-list-item-title>{{ workout.name }}</v-list-item-title>
-        </v-list-item-content>
-        <!-- <v-list-item-action>
-          <v-list-item-title>{{ EXERCISE_COUNT(workout.workout_id) }}</v-list-item-title>
-        </v-list-item-action> -->
-      </v-list-item>
+
+      <div v-if="workouts.length > 0" >
+        <v-list-item
+          v-for="(workout, key) in workouts"
+          :key="key"
+          :to="{ name: 'workout', params: { id: workout.workout_id} }"
+        >
+          <v-list-item-content>
+            <v-list-item-title>{{ workout.name }}</v-list-item-title>
+          </v-list-item-content>
+          <!-- <v-list-item-action>
+            <v-list-item-title>{{ EXERCISE_COUNT(workout.workout_id) }}</v-list-item-title>
+          </v-list-item-action> -->
+        </v-list-item>
+      </div>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -68,6 +70,7 @@
       },
       workouts: {
         get() {
+          console.log("WORKOUTS: ", this.WORKOUTS)
           return this.WORKOUTS
         }
       }

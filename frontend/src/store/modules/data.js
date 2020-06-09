@@ -29,7 +29,7 @@ export default {
   },
   mutations: {
     ADD_WORKOUT: (state, payload) => {
-      state.workouts.unshift(payload.workout)
+      state.workouts.unshift(payload.work)
     },
     ASSIGN_EXERCISE: (state, payload) => {
       Object.assign(state.workouts.find(workout =>
@@ -98,9 +98,13 @@ export default {
     GET_WORKOUTS: async (context) => {
       let { data } = await axios.get(`workouts`,
         {
+          baseURL: 'http://localhost:3000/api/mongo/',
           headers: { Authorization: `Bearer ${context.rootState.User.token}` }
         });
-      context.commit('SET_WORKOUTS', data);
+      console.log("DATA: ", data)
+      if (data !== "") {
+        context.commit('SET_WORKOUTS', data);
+      }
     },
     POST_EXERCISE: ({ rootState, commit }, payload) => {
       return new Promise((resolve, reject) => {
@@ -146,10 +150,12 @@ export default {
           .post(`workouts`,
             payload,
             {
+              baseURL: 'http://localhost:3000/api/mongo/',
               headers: { Authorization: `Bearer ${context.rootState.User.token}` }
             })
           .then(({ data, status }) => {
             if (status === 200 || status === 201) {
+              console.log("NEW WORKOUT: ", data)
               context.commit('ADD_WORKOUT', data);
               resolve({ data, status });
             }
