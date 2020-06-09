@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var cors = require('cors')
 
 var indexRouter = require('./routes');
 var apisRouter = require('./routes/apis');
@@ -15,13 +14,21 @@ db.authenticate()
   .then(() => console.log('Database connected...'))
   .catch(err => console.error('Error: ' + err))
 
+var mongoose = require("mongoose")
+
+mongoose.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Mongo connected...'))
+    .catch(err => console.error('Mongo Connection Error: ' + err))
+
+mongoose.connection.on('error', err => {
+    console.error('Mongo Error: ' + err)
+});
+
 var app = express();
-app.use(cors())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -31,8 +38,6 @@ app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
 app.use('/', indexRouter);
 app.use('/api', apisRouter);
-
-
 
 // Handle 404
 app.use(function(req, res) {
