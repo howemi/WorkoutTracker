@@ -29,6 +29,7 @@ export default {
   },
   mutations: {
     ADD_WORKOUT: (state, payload) => {
+      payload.work.exercises = []
       state.workouts.unshift(payload.work)
     },
     ASSIGN_EXERCISE: (state, payload) => {
@@ -86,7 +87,9 @@ export default {
               exercises: data
             }
             if (status === 200 || status === 201) {
-              context.commit('SET_EXERCISES', exercises); 
+              if (data && data !== "") {
+                context.commit('SET_EXERCISES', exercises);
+              }
               resolve({ data, status })
             }
           })
@@ -100,7 +103,6 @@ export default {
         {
           headers: { Authorization: `Bearer ${context.rootState.User.token}` }
         });
-      console.log("DATA: ", data)
       if (data !== "") {
         context.commit('SET_WORKOUTS', data);
       }
@@ -153,7 +155,6 @@ export default {
             })
           .then(({ data, status }) => {
             if (status === 200 || status === 201) {
-              console.log("NEW WORKOUT: ", data)
               context.commit('ADD_WORKOUT', data);
               resolve({ data, status });
             }

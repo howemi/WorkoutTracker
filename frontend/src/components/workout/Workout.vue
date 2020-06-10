@@ -4,7 +4,6 @@
     <v-data-table
     :headers="headers"
     :items="exercises"
-    sort-by="calories"
     class="elevation-1"
   >
     <template v-slot:top>

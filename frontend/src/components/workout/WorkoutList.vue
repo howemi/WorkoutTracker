@@ -70,7 +70,6 @@
       },
       workouts: {
         get() {
-          console.log("WORKOUTS: ", this.WORKOUTS)
           return this.WORKOUTS
         }
       }
