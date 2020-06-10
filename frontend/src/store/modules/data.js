@@ -57,7 +57,7 @@ export default {
     DELETE_EXERCISE: (context, payload) => {
       return new Promise((resolve, reject) => {
         axios
-          .post(`exercises/delete`,
+          .post(`mongo/exercises/delete`,
           payload,
           {
             headers: { Authorization: `Bearer ${context.rootState.User.token}` }
@@ -76,7 +76,7 @@ export default {
     GET_EXERCISES: (context, { workoutId }) => {
       return new Promise((resolve, reject) => {
         axios
-          .get(`exercises/${workoutId}`,
+          .get(`mongo/exercises/${workoutId}`,
             {
               headers: { Authorization: `Bearer ${context.rootState.User.token}` }
             })
@@ -96,9 +96,8 @@ export default {
       })
     },
     GET_WORKOUTS: async (context) => {
-      let { data } = await axios.get(`workouts`,
+      let { data } = await axios.get(`mongo/workouts`,
         {
-          baseURL: 'http://localhost:3000/api/mongo/',
           headers: { Authorization: `Bearer ${context.rootState.User.token}` }
         });
       console.log("DATA: ", data)
@@ -109,7 +108,7 @@ export default {
     POST_EXERCISE: ({ rootState, commit }, payload) => {
       return new Promise((resolve, reject) => {
         axios
-          .post(`exercises`,
+          .post(`mongo/exercises`,
             payload,
             {
               headers: { Authorization: `Bearer ${rootState.User.token}` }
@@ -127,7 +126,7 @@ export default {
     },
     UPDATE_EXERCISE: ({ rootState, commit }, payload) => {
       return new Promise((resolve, reject) => {
-        axios.post('exercises/update',
+        axios.post('mongo/exercises/update',
           payload.editedItem,
           {
             headers: { Authorization: `Bearer ${rootState.User.token}` }
@@ -147,10 +146,9 @@ export default {
     POST_WORKOUT: (context, payload) => {
       return new Promise((resolve, reject) => {
         axios
-          .post(`workouts`,
+          .post(`mongo/workouts`,
             payload,
             {
-              baseURL: 'http://localhost:3000/api/mongo/',
               headers: { Authorization: `Bearer ${context.rootState.User.token}` }
             })
           .then(({ data, status }) => {

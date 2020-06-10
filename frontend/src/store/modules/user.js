@@ -19,7 +19,7 @@ export default {
     INVALIDATE_TOKEN: (context) => {
       return new Promise((resolve, reject) => {
         axios
-          .post('/logout', { token: context.getters.TOKEN })
+          .post('mysql/logout', { token: context.getters.TOKEN })
           .then(({ status }) => {
             if (status === 200) {
               context.commit('SET_AUTH_TOKEN', null)
@@ -35,7 +35,7 @@ export default {
       commit;
       return new Promise((resolve, reject) => {
         axios
-          .post(`login`, payload)
+          .post(`mysql/login`, payload)
           .then((response) => {
             if (response.status === 200) {
               commit('SET_AUTH_TOKEN', response.data.token)
@@ -52,7 +52,7 @@ export default {
       //hash password
       return new Promise((resolve, reject) => {
         axios
-          .post(`register`, payload)
+          .post(`mysql/register`, payload)
           .then((response) => {
             if (response.status === 200) {
               commit('SET_AUTH_TOKEN', response.data.token)
