@@ -10,10 +10,7 @@ Vue.config.productionTip = false
 
 axios.defaults.baseURL = 'https://www.olympiate.com/api/mysql'
 // axios.defaults.withCredentials = true
-axios.defaults.headers.post['origin'] = 'http://www.olympiate.com'
-axios.defaults.headers.get['origin'] = 'http://www.olympiate.com'
-axios.defaults.headers.update['origin'] = 'http://www.olympiate.com'
-axios.defaults.headers.delete['origin'] = 'http://www.olympiate.com'
+axios.defaults.headers.common['origin'] = 'http://www.olympiate.com'
 
 Vue.use(require('vue-moment'))
 
