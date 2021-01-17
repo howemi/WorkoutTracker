@@ -8,7 +8,7 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'http://localhost:3000/api/mysql/'
+axios.defaults.baseURL = 'https://www.olympiate.com/api/mysql'
 axios.defaults.withCredentials = true
 
 Vue.use(require('vue-moment'))

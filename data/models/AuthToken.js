@@ -14,10 +14,10 @@ const AuthToken = db.define('auth_token', {
   },
   user_id: {
     type: Sequelize.INTEGER,
-    references: {
-      model: User,
-      key: 'user_id',
-    }
+//    references: {
+//      model: User,
+//      key: 'user_id',
+//    }
   },
   
 })
