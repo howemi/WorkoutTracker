@@ -35,7 +35,7 @@ export default {
       commit;
       return new Promise((resolve, reject) => {
         axios
-          .post(`login`, payload)
+          .post(`login`, payload, {headers: {origin: 'http://www.olympiate.com'}})
           .then((response) => {
             if (response.status === 200) {
               commit('SET_AUTH_TOKEN', response.data.token)
