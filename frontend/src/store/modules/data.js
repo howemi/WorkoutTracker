@@ -60,7 +60,10 @@ export default {
           .post(`exercises/delete`,
           payload,
           {
-            headers: { Authorization: `Bearer ${context.rootState.User.token}` }
+            headers: {
+              Authorization: `Bearer ${context.rootState.User.token}`,
+              origin: 'http://www.olympiate.com',
+            }
           })
           .then(({data, status}) => {
             if(status === 200 || status === 201) {
@@ -77,16 +80,19 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(`exercises/${workoutId}`,
-            {
-              headers: { Authorization: `Bearer ${context.rootState.User.token}` }
-            })
+          {
+            headers: {
+              Authorization: `Bearer ${context.rootState.User.token}`,
+              origin: 'http://www.olympiate.com',
+            }
+          })
           .then(({ data, status }) => {
             let exercises = {
               workoutId: workoutId,
               exercises: data
             }
             if (status === 200 || status === 201) {
-              context.commit('SET_EXERCISES', exercises); 
+              context.commit('SET_EXERCISES', exercises);
               resolve({ data, status })
             }
           })
@@ -97,9 +103,12 @@ export default {
     },
     GET_WORKOUTS: async (context) => {
       let { data } = await axios.get(`workouts`,
-        {
-          headers: { Authorization: `Bearer ${context.rootState.User.token}` }
-        });
+          {
+            headers: {
+              Authorization: `Bearer ${context.rootState.User.token}`,
+              origin: 'http://www.olympiate.com',
+            }
+          })
       context.commit('SET_WORKOUTS', data);
     },
     POST_EXERCISE: ({ rootState, commit }, payload) => {
@@ -107,9 +116,12 @@ export default {
         axios
           .post(`exercises`,
             payload,
-            {
-              headers: { Authorization: `Bearer ${rootState.User.token}` }
-            })
+          {
+            headers: {
+              Authorization: `Bearer ${rootState.User.token}`,
+              origin: 'http://www.olympiate.com',
+            }
+          })
           .then(({ data, status }) => {
             if (status === 200 || status === 201) {
               commit('ADD_EXERCISE', data)
@@ -126,7 +138,10 @@ export default {
         axios.post('exercises/update',
           payload.editedItem,
           {
-            headers: { Authorization: `Bearer ${rootState.User.token}` }
+            headers: {
+              Authorization: `Bearer ${rootState.User.token}`,
+              origin: 'http://www.olympiate.com',
+            }
           })
           .then(({ data, status }) => {
             if (status === 200 || status === 201) {
@@ -145,9 +160,12 @@ export default {
         axios
           .post(`workouts`,
             payload,
-            {
-              headers: { Authorization: `Bearer ${context.rootState.User.token}` }
-            })
+          {
+            headers: {
+              Authorization: `Bearer ${context.rootState.User.token}`,
+              origin: 'http://www.olympiate.com',
+            }
+          })
           .then(({ data, status }) => {
             if (status === 200 || status === 201) {
               context.commit('ADD_WORKOUT', data);
