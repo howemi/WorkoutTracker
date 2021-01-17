@@ -20,7 +20,7 @@
         </v-btn>
       </router-link>
       <v-spacer></v-spacer>
-      <router-link 
+      <router-link
         v-if="!loggedIn"
         to="/login">
         <v-btn
@@ -42,21 +42,6 @@
       <router-view></router-view>
     </v-content>
 
-    <v-footer
-      color="info lighten-1"
-      padless
-    >
-      <v-row
-        justify="center"
-      >
-        <v-col
-          class="primary lighten-2 py-1 text-center white--text"
-          cols="12"
-        >
-          {{ new Date().getFullYear() }} — <strong>Olympiate</strong>
-        </v-col>
-      </v-row>
-    </v-footer>
   </v-app>
 </template>
 

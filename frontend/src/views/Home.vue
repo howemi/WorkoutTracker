@@ -1,16 +1,11 @@
 <template>
-  <section>
-    <div :style="{backgroundImage: `url(${backgroundUrl})`}" style="margin-left: 0px; background-size: cover">
-      <div style="height: 550px;" >
-        <div style="background-color: rgba(255,255,255,0.6); position: absolute;
-                margin-left: 10%; margin-right: 10%; margin-top: 5%; height: 80%; width: 80%;">
-          <div style="text-align: center; padding-top: 125px; font-size: 50px; color: #1976d2; font-weight: bold;">
-            Commit to be Fit
+  <div>
+    <div :style="{backgroundImage: `url(${backgroundUrl})`}">
+        <div id="main-view">
+          <div id="hero-box" class="text-center">
+            Watch Yourself Grow
           </div>
-          <br>
-          <br>
-          <br>
-          <div style="text-align: center;">
+          <div class="mt-5 text-center">
             <v-btn
                     color="#1976d2"
                     style="color: white; display: inline-block; padding-top: 10px;"
@@ -21,14 +16,32 @@
           </div>
           <br>
         </div>
-      </div>
     </div>
-  </section>
+  </div>
 </template>
 
+<style scoped>
+  #main-view {
+      position: absolute;
+     width: 100%;
+     background-size: cover;
+     background-image: url(/img/fitness.99cfd922.jpg);
+     /* background-size: cover; */
+     background-repeat: no-repeat;
+     /* background-size: 100%; */
+     background-position: center;
+     height: 100%;
+ }
+ #hero-box{
+    padding-top: 125px;
+    font-size: 50px;
+    color: #1976d2;
+    font-weight: bold;
+ }
+</style>
 <script>
 
-import backgroundUrl from '../assets/workout.jpg'
+import backgroundUrl from '../assets/fitness.jpg'
 import { mapGetters } from 'vuex'
 
 export default {
